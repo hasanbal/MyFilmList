@@ -1,0 +1,81 @@
+<%- include('header.ejs') %>
+	
+	<div class="container">
+
+		<form >
+			
+			<input type="text" name="search" class="searchtext form-control col-md-12" style="margin-top:50px;" placeholder="Search Movies or Series">
+	
+		</form>
+	
+		<div class="row result" >
+		
+		</div>
+
+	</div>
+	
+	</div>
+</body>
+
+</html>
+
+
+  <script type="text/javascript">
+  	$(".searchtext").keyup(
+  		function(){
+  			
+  			var text = $(".searchtext").val();
+  			text = text + "*";
+
+  			$.get( "https://www.omdbapi.com/", { s: text, apikey: "" } )
+			  .done(function( data ) {
+			  	$(".result").empty();
+			  	if(data.Search == null){
+			  		$(".result").append("<div style='margin-top:20px;' class='col-md-12 alert alert-danger'> No result :( </div>");
+			  	}else {
+				  	for(var i=0; i < Math.min(6,data.Search.length); i++){
+				 		var obj="";
+
+				 		obj += "<div class='col-md-4' id='thumb'>";
+				  		
+				  		obj += "<h3>" + data.Search[i].Title + "</h3>";
+				 
+				  		
+				  		if(data.Search[i].Poster == "N/A")
+				  			obj += "<img src='noimg.png' height=250 width=200><br>";
+				  		else
+				  			obj += "<img src='"+data.Search[i].Poster + "' height=250 width = 200><br>";
+				  		
+				  		obj += "Year: " + data.Search[i].Year + "<br>";
+				  		obj += "Type: ";
+				  		if(data.Search[i].Type == "movie")
+				  			obj += "Movie<br>";
+				  		else
+				  			obj += "Series<br>"; 
+						var id = data.Search[i].imdbID;
+				  		obj += "<button id='"+id+"' class='btn btn-success col-md-12' style='margin-bottom:10px' onclick='button(1,id);'>Wathed</button><br>";
+				  		obj += "<button id='"+id+"' class='btn btn-warning col-md-12' style='margin-bottom:10px' onclick='button(2,id);'>Now watching</button><br>";
+				  		obj += "<button id='"+id+"' class='btn btn-primary col-md-12' onclick='button(3,id);'>I will watch</button><br>";
+				  		
+				  		obj += "</div>";
+						$(".result").append(obj);
+						
+				 	
+				 	}
+			 	}
+				
+			  });
+
+  		
+	  });
+	  function button(type, imdbID){
+		data = {type: type, imdbID: imdbID};
+		//console.log(data);
+		$.get("/addFilm",data,function(data){
+
+			//alert(data);
+		});
+	  }
+
+  
+  </script>

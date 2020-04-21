@@ -1,0 +1,70 @@
+<% include header.ejs %>
+<link rel="stylesheet" type="text/css" href="/login.css">
+
+<% if(data.msg == "wrong un1"){ %>
+    <div class="alert alert-danger" role="alert">
+      <strong> The first username is not exist.</strong>
+    </div>
+<% } %>
+<% if(data.msg == "wrong un2"){ %>
+    <div class="alert alert-danger" role="alert">
+      <strong> The second username is not exist.</strong>
+    </div>
+<% } %>
+<% if(data.msg == "null un1"){ %>
+    <div class="alert alert-danger" role="alert">
+      <strong> The first users profile is empty.</strong>
+    </div>
+<% } %>
+<% if(data.msg == "null un2"){ %>
+    <div class="alert alert-danger" role="alert">
+      <strong> The second users profile is empty.</strong>
+    </div>
+<% } %>
+
+<div class="container">
+
+        <div class="wrapper fadeInDown">
+                <div id="formContent">
+                  <!-- Tabs Titles -->
+              
+                  <!-- Icon -->
+                <div class="fadeIn first">
+                    <h1>Match</h1>
+                </div>
+              
+                  <!-- Login Form -->
+                  <form method="POST">
+                    <input required type="text" id="login" class="fadeIn second" name="un1" placeholder="Username 1" value="<%= data.username %>">
+                    <input required type="text" id="password" class="fadeIn third" name="un2" placeholder="Username 2">
+                    <input type="submit" class="fadeIn fourth" value="MATCH" name="match">
+                  </form>
+            
+              
+                </div>
+              </div>
+
+<% if(data.difference != null){ %>      
+<hr><h1>Your match rate is <%= data.match %>%. Good Luck :)</h1>
+<hr><h2>Your difference point is <%= data.difference %></h2><hr>
+
+<div class="row">
+
+
+        <ul>
+        <h2><%= data.un1 %>'s Genre Profile</h2><br>
+        <% for(var key in data.list1){ %>
+          <li> <%= key %> : <%= data.list1[key] %> </li>
+        <% } %>
+        </ul>
+
+
+        <ul>
+        <h2><%= data.un2 %>'s Genre Profile</h2><br>
+        <% for(var key in data.list2){ %>
+          <li> <%= key %> : <%= data.list2[key] %> </li>
+        <% } %>
+        </ul>
+</div>
+<% } %>
+</div>

@@ -1,0 +1,54 @@
+<% include header.ejs %>
+
+    <link rel="stylesheet" type="text/css" href="/login.css">
+    <% if(data == "kayit olusturuldu"){ %>
+        <div class="alert alert-success" role="alert">
+          <strong> Your account has been created successfully!</strong>
+        </div>
+        <% } %>
+        <% if(data == "hesap var zaten"){ %>
+            <div class="alert alert-warning" role="alert">
+              <strong> Unfortunately this username is currently in use :(</strong>
+            </div>
+            <% } %>
+
+            <% if(data == "sifreler eslesmiyor"){ %>
+                <div class="alert alert-danger" role="alert">
+                  <strong> Passwords do not match :(</strong>
+                </div>
+                <% } %>
+
+<div class="container">
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+    <div class="fadeIn first">
+        <h1>Register</h1>
+    </div>
+  
+      <!-- Login Form -->
+      <form method="POST">
+        <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+        <input type="password" id="password" class="fadeIn third" name="password2" placeholder="Password Confirmation">
+        <input type="submit" class="fadeIn fourth" value="Regsiter" name="register">
+      </form>
+
+  
+    </div>
+  </div>
+</div>
+    
+    <script>
+          var btn = document.getElementById('btn');
+          btn.disabled = false;
+        $('#password, #password2').on('keyup', function () {
+        if ($('#password').val() == $('#password2').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else 
+            $('#message').html('Not Matching').css('color', 'red');
+        });
+</script>
+</html>

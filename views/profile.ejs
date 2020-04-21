@@ -1,0 +1,80 @@
+<% include header.ejs %>
+
+<div class="container">
+<h1><%=data.username%>'s Profile</h1><hr>
+
+<h1>Watched</h1>
+<div class="row watched" >
+		
+</div>
+<hr>
+<h1>Now Watching</h1>
+<div class="row nowwatching" >
+		
+</div>
+
+<hr>
+<h1>Will Watch</h1>
+<div class="row willwatch" >
+		
+</div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+<script>
+var apiKey = "";
+// Initialize Firebase
+var config = {
+
+};
+firebase.initializeApp(config);
+var ref = firebase.database().ref("Users");
+
+
+var username = "<%= data.username %>";
+ref.child(username).child("List").orderByKey().on("value", function(snapshot) {
+	var data = snapshot.val();
+
+	for(var id in data){
+		addFilm(id,data[id]["watchType"]);
+	}
+	
+
+});
+
+function addFilm(id, type){
+	$.get("https://www.omdbapi.com/",{i:id , apikey:apiKey}).done(function(data){
+	var obj="";
+
+	obj += "<div class='col-md-4 col-sm-6' id='thumb'>";
+	
+	obj += "<h3>" + data.Title + "</h3>";
+
+	
+	if(data.Poster == "N/A")
+		obj += "<img src='noimg.png' height=250 width=200><br>";
+	else
+		obj += "<img src='"+data.Poster + "' height=250 width = 200><br>";
+	
+	obj += "Year: " + data.Year + "<br>";
+	obj += "Type: ";
+	if(data.Type == "movie")
+		obj += "Movie<br>";
+	else
+		obj += "Series<br>"; 
+
+	obj += "</div>";
+
+	if(type == 1)
+		$(".watched").append(obj);
+	
+	if(type == 2)
+		$(".nowwatching").append(obj);
+
+	if(type == 3)
+		$(".willwatch").append(obj);
+	});
+}
+</script>
+
+
+</html>
