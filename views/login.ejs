@@ -1,0 +1,35 @@
+<% include header.ejs %>
+
+    <link rel="stylesheet" type="text/css" href="/login.css">
+    <% if(data.length > 0){ %>
+        <div class="alert alert-danger" role="alert">
+          <strong> Login informations are not correct :(</strong>
+        </div>
+        <% } %>
+<div class="container">
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+    <div class="fadeIn first">
+        <h1>Login</h1>
+    </div>
+  
+      <!-- Login Form -->
+      <form method="POST">
+        <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+        <input type="submit" class="fadeIn fourth" value="Log In" name="login">
+      </form>
+
+  
+    </div>
+  </div>
+  </div>
+    <!-- <h1><%= data.length > 0  ? data : ' '; %></h1> -->
+  
+
+
+
+</html>
